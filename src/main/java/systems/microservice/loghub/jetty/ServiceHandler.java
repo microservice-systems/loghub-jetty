@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import systems.microservice.loghub.sdk.http.HttpException;
 
 import java.io.IOException;
 
@@ -33,40 +34,66 @@ public class ServiceHandler extends AbstractHandler {
     public ServiceHandler() {
     }
 
-    public int get(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public int get(String target, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         return HttpServletResponse.SC_NOT_IMPLEMENTED;
     }
 
-    public int post(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public int post(String target, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         return HttpServletResponse.SC_NOT_IMPLEMENTED;
     }
 
-    public int put(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public int put(String target, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         return HttpServletResponse.SC_NOT_IMPLEMENTED;
     }
 
-    public int patch(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public int patch(String target, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         return HttpServletResponse.SC_NOT_IMPLEMENTED;
     }
 
-    public int delete(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public int delete(String target, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         return HttpServletResponse.SC_NOT_IMPLEMENTED;
     }
 
-    public int head(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public int head(String target, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         return HttpServletResponse.SC_NOT_IMPLEMENTED;
     }
 
-    public int options(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public int options(String target, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         return HttpServletResponse.SC_NOT_IMPLEMENTED;
     }
 
-    public int trace(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public int trace(String target, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         return HttpServletResponse.SC_NOT_IMPLEMENTED;
     }
 
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         baseRequest.setHandled(true);
+        try {
+            int sc = HttpServletResponse.SC_NOT_IMPLEMENTED;
+            String m = request.getMethod();
+            if (m.equals("GET")) {
+                sc = get(target, request.getContentType(), request.getHeader("Accept"), request, response);
+            } else if (m.equals("POST")) {
+                sc = post(target, request.getContentType(), request.getHeader("Accept"), request, response);
+            } else if (m.equals("PUT")) {
+                sc = put(target, request.getContentType(), request.getHeader("Accept"), request, response);
+            } else if (m.equals("PATCH")) {
+                sc = patch(target, request.getContentType(), request.getHeader("Accept"), request, response);
+            } else if (m.equals("DELETE")) {
+                sc = delete(target, request.getContentType(), request.getHeader("Accept"), request, response);
+            } else if (m.equals("HEAD")) {
+                sc = head(target, request.getContentType(), request.getHeader("Accept"), request, response);
+            } else if (m.equals("OPTIONS")) {
+                sc = options(target, request.getContentType(), request.getHeader("Accept"), request, response);
+            } else if (m.equals("TRACE")) {
+                sc = trace(target, request.getContentType(), request.getHeader("Accept"), request, response);
+            }
+            response.setStatus(sc);
+        } catch (HttpException e) {
+            response.sendError(e.getCode(), e.getMessage());
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 }
