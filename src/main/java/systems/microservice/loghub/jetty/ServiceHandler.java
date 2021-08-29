@@ -33,6 +33,38 @@ public class ServiceHandler extends AbstractHandler {
     public ServiceHandler() {
     }
 
+    public int get(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        return HttpServletResponse.SC_NOT_IMPLEMENTED;
+    }
+
+    public int post(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        return HttpServletResponse.SC_NOT_IMPLEMENTED;
+    }
+
+    public int put(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        return HttpServletResponse.SC_NOT_IMPLEMENTED;
+    }
+
+    public int patch(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        return HttpServletResponse.SC_NOT_IMPLEMENTED;
+    }
+
+    public int delete(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        return HttpServletResponse.SC_NOT_IMPLEMENTED;
+    }
+
+    public int head(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        return HttpServletResponse.SC_NOT_IMPLEMENTED;
+    }
+
+    public int options(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        return HttpServletResponse.SC_NOT_IMPLEMENTED;
+    }
+
+    public int trace(String path, String contentType, String acceptType, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        return HttpServletResponse.SC_NOT_IMPLEMENTED;
+    }
+
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         baseRequest.setHandled(true);
