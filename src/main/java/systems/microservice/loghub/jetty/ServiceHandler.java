@@ -73,25 +73,25 @@ public class ServiceHandler extends AbstractHandler {
             int sc = HttpServletResponse.SC_NOT_IMPLEMENTED;
             String m = request.getMethod();
             if (m.equals("GET")) {
-                sc = get(target, request.getContentType(), request.getHeader("Accept"), request, response);
+                sc = get(target, request.getHeader("Content-Type"), request.getHeader("Accept"), request, response);
             } else if (m.equals("POST")) {
-                sc = post(target, request.getContentType(), request.getHeader("Accept"), request, response);
+                sc = post(target, request.getHeader("Content-Type"), request.getHeader("Accept"), request, response);
             } else if (m.equals("PUT")) {
-                sc = put(target, request.getContentType(), request.getHeader("Accept"), request, response);
+                sc = put(target, request.getHeader("Content-Type"), request.getHeader("Accept"), request, response);
             } else if (m.equals("PATCH")) {
-                sc = patch(target, request.getContentType(), request.getHeader("Accept"), request, response);
+                sc = patch(target, request.getHeader("Content-Type"), request.getHeader("Accept"), request, response);
             } else if (m.equals("DELETE")) {
-                sc = delete(target, request.getContentType(), request.getHeader("Accept"), request, response);
+                sc = delete(target, request.getHeader("Content-Type"), request.getHeader("Accept"), request, response);
             } else if (m.equals("HEAD")) {
-                sc = head(target, request.getContentType(), request.getHeader("Accept"), request, response);
+                sc = head(target, request.getHeader("Content-Type"), request.getHeader("Accept"), request, response);
             } else if (m.equals("OPTIONS")) {
-                sc = options(target, request.getContentType(), request.getHeader("Accept"), request, response);
+                sc = options(target, request.getHeader("Content-Type"), request.getHeader("Accept"), request, response);
             } else if (m.equals("TRACE")) {
-                sc = trace(target, request.getContentType(), request.getHeader("Accept"), request, response);
+                sc = trace(target, request.getHeader("Content-Type"), request.getHeader("Accept"), request, response);
             }
             response.setStatus(sc);
         } catch (HttpException e) {
-            response.sendError(e.getCode(), e.getMessage());
+            response.sendError(e.getStatus(), e.getMessage());
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
